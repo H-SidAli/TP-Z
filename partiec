@@ -1,0 +1,3120 @@
+/**--------------------------------------------------------**/
+/**       C o n v e r s i o n   Z vers C (Standard)        **/
+/**             Réalisée par Pr D.E ZEGOUR                 **/
+/**             E S I - Alger                              **/
+/**             Copywrite 2014                             **/
+/**--------------------------------------------------------**/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <Time.h>
+#include <string.h>
+#include <conio.h>
+#include <windows.h>
+#include <math.h>
+
+typedef int bool;
+
+#define True 1
+#define False 0
+#define ANSI_COLOR_BLACK "\x1b[30m"
+#define ANSI_COLOR_BG_WHITE "\x1b[47m"
+#define ANSI_COLOR_RESET "\x1b[0m"
+#define ANSI_COLOR_GREEN "\033[32m"
+#define ANSI_COLOR_RED "\033[31m"
+#define RED_BG "\033[41m"
+#define RED_BG_WHITE_TEXT "\033[41;37m"
+
+#define BLUE_BG_YELLOW_TEXT "\033[44;33m"
+#define RESET "\033[0m"
+
+/** Implémentation **\: ARBRE BINAIRE DE STRUCTURES**/
+
+/** Structures statiques **/
+
+typedef struct Tib Type_Tib;
+typedef Type_Tib *Typestr_Tib;
+typedef int Type1_Tib;
+typedef bool Type2_Tib;
+struct Tib
+{
+    Type1_Tib Champ1;
+    Type2_Tib Champ2;
+};
+
+Type1_Tib Struct1_Tib(Typestr_Tib S)
+{
+    return S->Champ1;
+}
+
+Type2_Tib Struct2_Tib(Typestr_Tib S)
+{
+    return S->Champ2;
+}
+
+void Aff_struct1_Tib(Typestr_Tib S, Type1_Tib Val)
+{
+    S->Champ1 = Val;
+}
+
+void Aff_struct2_Tib(Typestr_Tib S, Type2_Tib Val)
+{
+    S->Champ2 = Val;
+}
+
+/** Arbres de recherche binaire **/
+
+typedef Typestr_Tib Typeelem_ATib;
+typedef struct Noeud_ATib *Pointeur_ATib;
+
+struct Noeud_ATib
+{
+    Typeelem_ATib Val;
+    Pointeur_ATib Fg;
+    Pointeur_ATib Fd;
+    Pointeur_ATib Pere;
+};
+
+Typeelem_ATib Info_ATib(Pointeur_ATib P)
+{
+    return P->Val;
+}
+
+Pointeur_ATib Fg_ATib(Pointeur_ATib P)
+{
+    return P->Fg;
+}
+
+Pointeur_ATib Fd_ATib(Pointeur_ATib P)
+{
+    return P->Fd;
+}
+
+Pointeur_ATib Pere_ATib(Pointeur_ATib P)
+{
+    return P->Pere;
+}
+
+void Aff_info_ATib(Pointeur_ATib P, Typeelem_ATib Val)
+{
+    Typeelem_ATib _Temp;
+    _Temp = malloc(sizeof(Type_Tib));
+    /* Affectation globale de structure */
+    _Temp->Champ1 = Val->Champ1;
+    _Temp->Champ2 = Val->Champ2;
+    Val = _Temp;
+    P->Val = Val;
+}
+
+void Aff_fg_ATib(Pointeur_ATib P, Pointeur_ATib Q)
+{
+    P->Fg = Q;
+}
+
+void Aff_fd_ATib(Pointeur_ATib P, Pointeur_ATib Q)
+{
+    P->Fd = Q;
+}
+
+void Aff_pere_ATib(Pointeur_ATib P, Pointeur_ATib Q)
+{
+    P->Pere = Q;
+}
+
+void Creernoeud_ATib(Pointeur_ATib *P)
+{
+    *P = (struct Noeud_ATib *)malloc(sizeof(struct Noeud_ATib));
+    (*P)->Val = malloc(sizeof(Type_Tib));
+    (*P)->Fg = NULL;
+    (*P)->Fd = NULL;
+    (*P)->Pere = NULL;
+}
+
+void Liberernoeud_ATib(Pointeur_ATib P)
+{
+    free(P);
+}
+
+/** Implémentation **\: LISTE DE ENTIERS**/
+
+/** Listes lin?aires cha?n?es **/
+
+typedef int Typeelem_Li;
+typedef struct Maillon_Li *Pointeur_Li;
+
+struct Maillon_Li
+{
+    Typeelem_Li Val;
+    Pointeur_Li Suiv;
+};
+
+Pointeur_Li Allouer_Li(Pointeur_Li *P)
+{
+    *P = (struct Maillon_Li *)malloc(sizeof(struct Maillon_Li));
+    (*P)->Suiv = NULL;
+}
+
+void Aff_val_Li(Pointeur_Li P, Typeelem_Li Val)
+{
+    P->Val = Val;
+}
+
+void Aff_adr_Li(Pointeur_Li P, Pointeur_Li Q)
+{
+    P->Suiv = Q;
+}
+
+Pointeur_Li Suivant_Li(Pointeur_Li P)
+{
+    return (P->Suiv);
+}
+
+Typeelem_Li Valeur_Li(Pointeur_Li P)
+{
+    return (P->Val);
+}
+
+void Liberer_Li(Pointeur_Li P)
+{
+    free(P);
+}
+
+/** Implémentation **\: TABLEAU DE ARBRES BINAIRES DE STRUCTURES**/
+
+/** Tableaux **/
+
+typedef Pointeur_ATib Typeelem_V10ATib;
+typedef Typeelem_V10ATib *Typevect_V10ATib;
+
+Typeelem_V10ATib Element_V10ATib(Typevect_V10ATib V, int I1)
+{
+    return *(V + (I1 - 1));
+}
+
+void Aff_element_V10ATib(Typevect_V10ATib V, int I1, Typeelem_V10ATib Val)
+{
+    *(V + (I1 - 1)) = Val;
+}
+
+/** Implémentation **\: TABLEAU DE LISTES DE ENTIERS**/
+
+/** Tableaux **/
+
+typedef Pointeur_Li Typeelem_V10Li;
+typedef Typeelem_V10Li *Typevect_V10Li;
+
+Typeelem_V10Li Element_V10Li(Typevect_V10Li V, int I1)
+{
+    return *(V + (I1 - 1));
+}
+
+void Aff_element_V10Li(Typevect_V10Li V, int I1, Typeelem_V10Li Val)
+{
+    *(V + (I1 - 1)) = Val;
+}
+
+/** Implémentation **\: FILE DE ARBRES BINAIRES DE STRUCTURES**/
+/** Files d'attente **/
+
+typedef Pointeur_ATib Typeelem_FATib;
+typedef struct Filedattente_FATib *Pointeur_FATib;
+typedef struct Maillon_FATib *Ptliste_FATib;
+
+struct Maillon_FATib
+{
+    Typeelem_FATib Val;
+    Ptliste_FATib Suiv;
+};
+
+struct Filedattente_FATib
+{
+    Ptliste_FATib Tete, Queue;
+};
+
+void Creerfile_FATib(Pointeur_FATib *Fil)
+{
+    *Fil = (struct Filedattente_FATib *)malloc(sizeof(struct Filedattente_FATib));
+    (*Fil)->Tete = NULL;
+    (*Fil)->Queue = NULL;
+}
+
+bool Filevide_FATib(Pointeur_FATib Fil)
+{
+    return Fil->Tete == NULL;
+}
+
+void Enfiler_FATib(Pointeur_FATib Fil, Typeelem_FATib Val)
+{
+    Ptliste_FATib Q;
+
+    Q = (struct Maillon_FATib *)malloc(sizeof(struct Maillon_FATib));
+    Q->Val = Val;
+    Q->Suiv = NULL;
+    if (!Filevide_FATib(Fil))
+        Fil->Queue->Suiv = Q;
+    else
+        Fil->Tete = Q;
+    Fil->Queue = Q;
+}
+
+void Defiler_FATib(Pointeur_FATib Fil, Typeelem_FATib *Val)
+{
+    if (!Filevide_FATib(Fil))
+    {
+        *Val = Fil->Tete->Val;
+        Fil->Tete = Fil->Tete->Suiv;
+    }
+    else
+        printf("%s \n", "File d'attente vide");
+}
+
+/** Variables du programme principal **/
+Pointeur_ATib Arbre = NULL;
+Pointeur_ATib P = NULL;
+Pointeur_ATib Node = NULL;
+Pointeur_ATib Q = NULL;
+Typestr_Tib S;
+Type_Tib S_S;
+Pointeur_Li L1 = NULL;
+Pointeur_Li L2 = NULL;
+Pointeur_Li L3 = NULL;
+Pointeur_Li L4 = NULL;
+Pointeur_Li Parc = NULL;
+Pointeur_Li Nn = NULL;
+int N;
+int M;
+int I;
+Typevect_V10ATib Arbarray;
+Typevect_V10Li TL1;
+Typevect_V10Li TL2;
+bool B;
+bool Done;
+int _Px1;
+int _Px2;
+
+/** Fonctions standards **/
+
+int Aleanombre(int N)
+{
+    return (rand() % N);
+}
+
+/** Initialisation d'une structure **/
+void Init_struct_Tib(Typestr_Tib S, Type_Tib S_)
+{
+    S->Champ1 = S_.Champ1;
+    S->Champ2 = S_.Champ2;
+}
+
+/** Prototypes des fonctions **/
+
+void Insertbst(Typestr_Tib *S, Pointeur_ATib *Arbre, bool *Done);
+Pointeur_ATib Createbst(int *N);
+bool Isbst(Pointeur_ATib *A, int *Mi, int *Ma);
+void Createbsts(Typevect_V10ATib *Arbarray);
+void Print_inorder(Pointeur_ATib *A1);
+void Resetvisited(Pointeur_ATib *A1);
+void Extractleaveslr(Pointeur_ATib *Arbre, Pointeur_FATib *Leaves);
+void Extractleavesrl(Pointeur_ATib *Arbre, Pointeur_FATib *Leaves);
+void Bblr(Pointeur_ATib *Arbre, Pointeur_Li *Llr);
+void Bbrl(Pointeur_ATib *Arbre, Pointeur_Li *Lrl);
+bool Isleaf(Pointeur_ATib *P);
+void Lllr(Pointeur_ATib *Arbre, Pointeur_Li *Llr);
+void Llrl(Pointeur_ATib *Arbre, Pointeur_Li *Llr);
+void Copytree(Pointeur_ATib *A1, Pointeur_ATib *C);
+void Search(Pointeur_ATib *R, int *Val, Pointeur_ATib *P, Pointeur_ATib *Q);
+void Delete(Pointeur_ATib *R, int *Val);
+void Checklllr(Pointeur_ATib *Arbre);
+void Checkllrl(Pointeur_ATib *Arbre);
+void Removedups(Pointeur_Li *List);
+void Checkbblr(Pointeur_ATib *Arbre, Pointeur_Li *L1, Pointeur_Li *L2);
+void Checkbbrl(Pointeur_ATib *Arbre, Pointeur_Li *L1, Pointeur_Li *L2);
+
+void printFancyLinkedList(Pointeur_Li head, int per_page)
+{
+    const int box_width = 6; // Fixed width for the box
+
+    Pointeur_Li current = head;
+    int node_count = 0;
+    while (current != NULL)
+    {
+        node_count++;
+        current = Suivant_Li(current);
+    }
+    int pages = (node_count + per_page - 1) / per_page; // Calculate total pages
+    int page = 1;
+
+    while (page <= pages)
+    {
+        current = head;
+        int count = 0;
+        while (current != NULL && count < per_page)
+        {
+            printf("+");
+            for (int i = 0; i < box_width + 2; i++)
+            {
+                printf("-");
+            }
+            printf("+");
+            if (Suivant_Li(current) != NULL)
+            {
+                printf("    ");
+            }
+            current = Suivant_Li(current);
+            count++;
+        }
+        printf("\n");
+
+        current = head;
+        count = 0;
+        while (current != NULL && count < per_page)
+        {
+            printf("| %6d ", Valeur_Li(current));
+            printf("|");
+            if (Suivant_Li(current) != NULL)
+            {
+                printf(" -> ");
+            }
+            current = Suivant_Li(current);
+            count++;
+        }
+        printf("\n");
+
+        current = head;
+        count = 0;
+        while (current != NULL && count < per_page)
+        {
+            printf("+");
+            for (int i = 0; i < box_width + 2; i++)
+            {
+                printf("-");
+            }
+            printf("+");
+            if (Suivant_Li(current) != NULL)
+            {
+                printf("    ");
+            }
+            current = Suivant_Li(current);
+            count++;
+        }
+        printf("\n\n");
+
+        // Move to the next page
+        page++;
+        for (int i = 0; i < per_page && head != NULL; i++)
+        {
+            head = Suivant_Li(head);
+        }
+    }
+}
+
+//----------------HEIGHT -------------------------------//
+
+int height(Pointeur_ATib *Arbre)
+{
+    /** Variables locales **/
+    int Height2;
+    int Left;
+    int Right;
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    if ((*Arbre == NULL))
+    {
+        Height2 = 0;
+    }
+    else
+    {
+        _Px1 = Fg_ATib(*Arbre);
+        Left = height(&_Px1);
+        _Px2 = Fd_ATib(*Arbre);
+        Right = height(&_Px2);
+        Height2 = max(Left, Right) + 1;
+    };
+
+    return Height2;
+}
+
+int getcol(int h)
+{
+    if (h == 1)
+        return 1;
+    return getcol(h - 1) * 2 + 1;
+}
+
+// Function to print the tree into a 2D array with chainage
+void printTreeWithChainage(char **M, Pointeur_ATib *Arbre, int col, int row, int height)
+{
+    if (*Arbre == NULL)
+        return;
+
+    char buffer[5];
+    snprintf(buffer, sizeof(buffer), "%d", Struct1_Tib(Info_ATib(*Arbre)));
+    int len = strlen(buffer);
+    for (int i = 0; i < len; ++i)
+    {
+        M[row][col + i] = buffer[i];
+    }
+
+    if (Fg_ATib(*Arbre))
+    {
+        int new_col = col - pow(2, height - 2) * 2;
+        M[row + 1][col - 1] = '/';
+        for (int i = col - 2; i > new_col + len / 2; --i)
+        {
+            M[row + 1][i] = '-';
+        }
+        Pointeur_ATib _Px1 = Fg_ATib((*Arbre));
+        printTreeWithChainage(M, &_Px1, new_col, row + 2, height - 1);
+    }
+
+    if (Fd_ATib(*Arbre))
+    {
+        int new_col = col + pow(2, height - 2) * 2;
+        M[row + 1][col + len] = '\\';
+        for (int i = col + len + 1; i < new_col + len / 2; ++i)
+        {
+            M[row + 1][i] = '-';
+        }
+        Pointeur_ATib _Px1 = Fd_ATib((*Arbre));
+        printTreeWithChainage(M, &_Px1, new_col, row + 2, height - 1);
+    }
+}
+
+// Function to print the tree
+void TreePrinter(Pointeur_ATib *Arbre, int searchValue)
+{
+    int h = height(Arbre);
+    int col = getcol(h) * 3;                            // Adjusting for possible larger numbers and more spaces
+    char **M = (char **)malloc(h * 2 * sizeof(char *)); // Double the rows to fit chainage
+    for (int i = 0; i < h * 2; i++)
+    {
+        M[i] = (char *)malloc(col * sizeof(char));
+        for (int j = 0; j < col; j++)
+        {
+            M[i][j] = ' '; // Initialize with spaces
+        }
+    }
+    printTreeWithChainage(M, Arbre, col / 3, 0, h);
+
+    char searchBuffer[5];
+    snprintf(searchBuffer, sizeof(searchBuffer), "%d", searchValue);
+
+    for (int i = 0; i < h * 2; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            if (M[i][j] != ' ' && M[i][j] != '/' && M[i][j] != '\\' && M[i][j] != '-')
+            {
+                char currentBuffer[5];
+                int k = 0;
+                while (j + k < col && M[i][j + k] != ' ' && M[i][j + k] != '/' && M[i][j + k] != '\\' && M[i][j + k] != '-')
+                {
+                    currentBuffer[k] = M[i][j + k];
+                    k++;
+                }
+                currentBuffer[k] = '\0';
+                if (strcmp(currentBuffer, searchBuffer) == 0)
+                {
+                    printf("%s%s%s", BLUE_BG_YELLOW_TEXT, currentBuffer, RESET);
+                    j += k - 1;
+                }
+                else
+                {
+                    printf("%s", currentBuffer);
+                    j += k - 1;
+                }
+            }
+            else
+            {
+                printf("%c", M[i][j]);
+            }
+        }
+        printf("\n");
+    }
+
+    for (int i = 0; i < h * 2; i++)
+    {
+        free(M[i]);
+    }
+    free(M);
+}
+
+/*-----------------------------------------------------------*/
+/*----------------------- Insertbst -------------------------*/
+/*-----------------------------------------------------------*/
+void Insertbst(Typestr_Tib *S, Pointeur_ATib *Arbre, bool *Done)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    int A;
+
+    /** Corps du module **/
+    *Done = False;
+    if ((*Arbre == NULL))
+    {
+        Creernoeud_ATib(&*Arbre);
+        Aff_info_ATib(*Arbre, *S);
+        Aff_pere_ATib(*Arbre, NULL);
+        *Done = True;
+    }
+    else
+    {
+        if ((Struct1_Tib(Info_ATib(*Arbre)) == Struct1_Tib(*S)))
+        {
+            *Done = True;
+        }
+        else
+        {
+            if ((Struct1_Tib(Info_ATib(*Arbre)) > Struct1_Tib(*S)))
+            {
+                P = Fg_ATib(*Arbre);
+                Insertbst(&*S, &P, &*Done);
+                Aff_fg_ATib(*Arbre, P);
+                Aff_pere_ATib(P, *Arbre);
+            }
+            else
+            {
+                P = Fd_ATib(*Arbre);
+                Insertbst(&*S, &P, &*Done);
+                Aff_fd_ATib(*Arbre, P);
+                Aff_pere_ATib(P, *Arbre);
+            };
+        };
+    };
+}
+/*-----------------------------------------------------------*/
+/*----------------------- Createbst -------------------------*/
+/*-----------------------------------------------------------*/
+Pointeur_ATib Createbst(int *N)
+{
+    /** Variables locales **/
+    Pointeur_ATib Createbst2 = NULL;
+    int A;
+    Pointeur_ATib Arbre = NULL;
+    Pointeur_ATib P = NULL;
+    Pointeur_ATib Q = NULL;
+    Typestr_Tib S;
+    int Randnumber;
+    int I;
+    bool Done;
+    Type_Tib S_S;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    I = 1;
+    if ((*N == 0))
+    {
+        Arbre = NULL;
+    }
+    else
+    {
+        /*CREATING THE RANDOM STRUCTURES*/
+        /*CREATING RANDOM NUMBERS*/
+        while ((I <= *N))
+        {
+            Randnumber = Aleanombre(10000);
+            /*SETTING THE PROPER STRUCTURES*/
+            S_S.Champ1 = Randnumber;
+            S_S.Champ2 = False;
+            Init_struct_Tib(S, S_S);
+            /*STARTING THE INSETION*/
+            Insertbst(&S, &Arbre, &Done);
+            if ((Done == True))
+            {
+                I = I + 1;
+            };
+        };
+    };
+    Createbst2 = Arbre;
+
+    return Createbst2;
+}
+/*---------------------------------------------*/
+/*-------------------- isBST ------------------*/
+/*---------------------------------------------*/
+bool Isbst(Pointeur_ATib *A, int *Mi, int *Ma)
+{
+    /** Variables locales **/
+    bool Isbst2;
+    Pointeur_ATib _Px1 = NULL;
+    int _Px2;
+    Pointeur_ATib _Px3 = NULL;
+    int _Px4;
+
+    /** Corps du module **/
+    if ((*A == NULL))
+    {
+        Isbst2 = True;
+    }
+    else
+    {
+        if (((Struct1_Tib(Info_ATib(*A)) <= *Mi) || (Struct1_Tib(Info_ATib(*A)) >= *Ma)))
+        {
+            Isbst2 = True;
+        }
+        else
+        {
+            _Px1 = Fg_ATib(*A);
+            _Px2 = Struct1_Tib(Info_ATib(*A));
+            _Px3 = Fd_ATib(*A);
+            _Px4 = Struct1_Tib(Info_ATib(*A)) + 1;
+            if ((Isbst(&_Px1, &*Mi, &_Px2) && Isbst(&_Px3, &_Px4, &*Ma)))
+            {
+                Isbst2 = True;
+            };
+        };
+    };
+
+    return Isbst2;
+}
+/*-----------------------------------------------------------*/
+/*----------------------- Createbsts ------------------------*/
+/*-----------------------------------------------------------*/
+void Createbsts(Typevect_V10ATib *Arbarray)
+{
+    /** Variables locales **/
+    Pointeur_ATib Arbre = NULL;
+    int I;
+    int _Px1;
+
+    /** Corps du module **/
+    for (I = 1; I <= 10; ++I)
+    {
+        _Px1 = 100;
+        Arbre = Createbst(&_Px1);
+        Aff_element_V10ATib(*Arbarray, I, Arbre);
+    };
+}
+/*-------------------------------------------------------------*/
+/*----------------------- Print_Inorder ------------------------*/
+/*--------------------------------------------------------------*/
+void Print_inorder(Pointeur_ATib *A1)
+{
+    /** Variables locales **/
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    if (*A1 != NULL)
+    {
+        _Px1 = Fg_ATib(*A1);
+        Print_inorder(&_Px1);
+        printf(" %d", Struct1_Tib(Info_ATib(*A1)));
+        _Px2 = Fd_ATib(*A1);
+        Print_inorder(&_Px2);
+    };
+}
+/*-------------------------------------------------------------*/
+/*-------------------------- ResetVisited ------------------------*/
+/*----------------------------------------------------------------*/
+void Resetvisited(Pointeur_ATib *A1)
+{
+    /** Variables locales **/
+    Typestr_Tib S;
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    if (*A1 != NULL)
+    {
+        _Px1 = Fg_ATib(*A1);
+        Resetvisited(&_Px1);
+        /* Affectation globale de structure */
+        S->Champ1 = Info_ATib(*A1)->Champ1;
+        S->Champ2 = Info_ATib(*A1)->Champ2;
+        ;
+        Aff_struct2_Tib(S, False);
+        Aff_info_ATib(*A1, S);
+        _Px2 = Fd_ATib(*A1);
+        Resetvisited(&_Px2);
+    };
+}
+/*-----------------------------------------------------------*/
+/*--------------------- ExtractleafsLR ----------------------*/
+/*-----------------------------------------------------------*/
+void Extractleaveslr(Pointeur_ATib *Arbre, Pointeur_FATib *Leaves)
+{
+    /** Variables locales **/
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    if (*Arbre != NULL)
+    {
+        _Px1 = Fg_ATib(*Arbre);
+        Extractleaveslr(&_Px1, &*Leaves);
+        _Px2 = Fd_ATib(*Arbre);
+        Extractleaveslr(&_Px2, &*Leaves);
+        if ((Fd_ATib(*Arbre) == NULL) && (Fg_ATib(*Arbre) == NULL))
+        {
+            Enfiler_FATib(*Leaves, *Arbre);
+        };
+    };
+}
+/*-----------------------------------------------------------*/
+/*--------------------- ExtractleafsRL ----------------------*/
+/*-----------------------------------------------------------*/
+void Extractleavesrl(Pointeur_ATib *Arbre, Pointeur_FATib *Leaves)
+{
+    /** Variables locales **/
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    if (*Arbre != NULL)
+    {
+        _Px1 = Fd_ATib(*Arbre);
+        Extractleavesrl(&_Px1, &*Leaves);
+        _Px2 = Fg_ATib(*Arbre);
+        Extractleavesrl(&_Px2, &*Leaves);
+        if ((Fd_ATib(*Arbre) == NULL) && (Fg_ATib(*Arbre) == NULL))
+        {
+            Enfiler_FATib(*Leaves, *Arbre);
+        };
+    };
+}
+/*-----------------------------------------------------------*/
+/*-------------------------- BBLR ---------------------------*/
+/*-----------------------------------------------------------*/
+void Bblr(Pointeur_ATib *Arbre, Pointeur_Li *Llr)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_FATib Leaves = NULL;
+    Typestr_Tib S;
+    Pointeur_Li N = NULL;
+    Pointeur_Li Parclist = NULL;
+    Pointeur_Li Parc = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    Resetvisited(&*Arbre);
+    *Llr = NULL;
+    Creerfile_FATib(&Leaves);
+    Extractleaveslr(&*Arbre, &Leaves);
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        while ((P != NULL))
+        {
+            /* PROCESS*/
+            if ((Struct2_Tib(Info_ATib(P)) == False))
+            {
+                /* Affectation globale de structure */
+                S->Champ1 = Info_ATib(P)->Champ1;
+                S->Champ2 = Info_ATib(P)->Champ2;
+                ;
+                Aff_struct2_Tib(S, True);
+                Aff_info_ATib(P, S);
+                /* Creation de la liste apartir des noeuds visitee*/
+                if ((*Llr == NULL))
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    *Llr = N;
+                    Parclist = N;
+                }
+                else
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    Aff_adr_Li(Parclist, N);
+                    Parclist = Suivant_Li(Parclist);
+                };
+            };
+            P = Pere_ATib(P);
+        };
+    };
+}
+
+void BblrAnimated(Pointeur_ATib *Arbre, Pointeur_Li *Llr)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_FATib Leaves = NULL;
+    Typestr_Tib S;
+    Pointeur_Li N = NULL;
+    Pointeur_Li Parclist = NULL;
+    Pointeur_Li Parc = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    Resetvisited(&*Arbre);
+    *Llr = NULL;
+    Creerfile_FATib(&Leaves);
+    Extractleaveslr(&*Arbre, &Leaves);
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        while ((P != NULL))
+        {
+            /* PROCESS*/
+            if ((Struct2_Tib(Info_ATib(P)) == False))
+            {
+                system("cls");
+                printf("\t       \033[34m\033[1mTraversal one\033[0m\n\n");
+                TreePrinter(&*Arbre, Struct1_Tib(Info_ATib(P)));
+                /* Affectation globale de structure */
+                S->Champ1 = Info_ATib(P)->Champ1;
+                S->Champ2 = Info_ATib(P)->Champ2;
+                ;
+                Aff_struct2_Tib(S, True);
+                Aff_info_ATib(P, S);
+                /* Creation de la liste apartir des noeuds visitee*/
+                if ((*Llr == NULL))
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    *Llr = N;
+                    Parclist = N;
+                }
+                else
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    Aff_adr_Li(Parclist, N);
+                    Parclist = Suivant_Li(Parclist);
+                };
+                printf("\n\n");
+                printFancyLinkedList(L1, 9);
+                Sleep(450);
+            };
+            P = Pere_ATib(P);
+        };
+    };
+}
+/*-----------------------------------------------------------*/
+/*-------------------------- BBRL ---------------------------*/
+/*-----------------------------------------------------------*/
+void Bbrl(Pointeur_ATib *Arbre, Pointeur_Li *Lrl)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_FATib Leaves = NULL;
+    Typestr_Tib S;
+    Pointeur_Li N = NULL;
+    Pointeur_Li Parclist = NULL;
+    Pointeur_Li Parc = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    Resetvisited(&*Arbre);
+    *Lrl = NULL;
+    Creerfile_FATib(&Leaves);
+    Extractleavesrl(&*Arbre, &Leaves);
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        while ((P != NULL))
+        {
+            /* PROCESS*/
+            if ((Struct2_Tib(Info_ATib(P)) == False))
+            {
+                /* Affectation globale de structure */
+                S->Champ1 = Info_ATib(P)->Champ1;
+                S->Champ2 = Info_ATib(P)->Champ2;
+                ;
+                Aff_struct2_Tib(S, True);
+                Aff_info_ATib(P, S);
+                /* Creation de la liste apartir des noeuds visitee*/
+                if ((*Lrl == NULL))
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    *Lrl = N;
+                    Parclist = N;
+                }
+                else
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    Aff_adr_Li(Parclist, N);
+                    Parclist = Suivant_Li(Parclist);
+                };
+            };
+            P = Pere_ATib(P);
+        };
+    };
+}
+
+void BbrlAnimated(Pointeur_ATib *Arbre, Pointeur_Li *Lrl)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_FATib Leaves = NULL;
+    Typestr_Tib S;
+    Pointeur_Li N = NULL;
+    Pointeur_Li Parclist = NULL;
+    Pointeur_Li Parc = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    Resetvisited(&*Arbre);
+    *Lrl = NULL;
+    Creerfile_FATib(&Leaves);
+    Extractleavesrl(&*Arbre, &Leaves);
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        while ((P != NULL))
+        {
+            /* PROCESS*/
+            if ((Struct2_Tib(Info_ATib(P)) == False))
+            {
+                system("cls");
+                printf("\t       \033[34m\033[1mTraversal Three\033[0m\n\n");
+                TreePrinter(&*Arbre, Struct1_Tib(Info_ATib(P)));
+                /* Affectation globale de structure */
+                S->Champ1 = Info_ATib(P)->Champ1;
+                S->Champ2 = Info_ATib(P)->Champ2;
+                ;
+                Aff_struct2_Tib(S, True);
+                Aff_info_ATib(P, S);
+                /* Creation de la liste apartir des noeuds visitee*/
+                if ((*Lrl == NULL))
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    *Lrl = N;
+                    Parclist = N;
+                }
+                else
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    Aff_adr_Li(Parclist, N);
+                    Parclist = Suivant_Li(Parclist);
+                };
+                printf("\n\n");
+                printFancyLinkedList(*Lrl, 9);
+                Sleep(450);
+            };
+            P = Pere_ATib(P);
+        };
+    };
+}
+/*-----------------------------------------------------------*/
+/*-------------------------- LEAF ---------------------------*/
+/*-----------------------------------------------------------*/
+bool Isleaf(Pointeur_ATib *P)
+{
+    /** Variables locales **/
+    bool Isleaf2;
+    bool Boolg;
+    bool Boold;
+
+    /** Corps du module **/
+    if ((*P == NULL))
+    {
+        Isleaf2 = True;
+    }
+    else
+    {
+        if (((Fg_ATib(*P) == NULL) && (Fd_ATib(*P) == NULL)))
+        {
+            Isleaf2 = True;
+        }
+        else
+        {
+            Isleaf2 = False;
+            if ((Fd_ATib(*P) != NULL))
+            {
+                if ((Fg_ATib(*P) != NULL))
+                {
+                    if (((Struct2_Tib(Info_ATib(Fd_ATib(*P))) == True) && (Struct2_Tib(Info_ATib(Fg_ATib(*P))) == True)))
+                    {
+                        Isleaf2 = True;
+                    };
+                }
+                else
+                {
+                    if ((Struct2_Tib(Info_ATib(Fd_ATib(*P))) == True))
+                    {
+                        Isleaf2 = True;
+                    };
+                };
+            }
+            else
+            {
+                if ((Struct2_Tib(Info_ATib(Fg_ATib(*P))) == True))
+                {
+                    Isleaf2 = True;
+                };
+            };
+        };
+    };
+
+    return Isleaf2;
+}
+/*-----------------------------------------------------------*/
+/*-------------------------- LLLR ---------------------------*/
+/*-----------------------------------------------------------*/
+void Lllr(Pointeur_ATib *Arbre, Pointeur_Li *Llr)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_ATib Perep = NULL;
+    Pointeur_ATib Prec = NULL;
+    Typestr_Tib S;
+    Pointeur_FATib Leaves = NULL;
+    Pointeur_Li N = NULL;
+    Pointeur_Li Parclist = NULL;
+    Pointeur_Li Parc = NULL;
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    *Llr = NULL;
+    Resetvisited(&*Arbre);
+    Creerfile_FATib(&Leaves);
+    Extractleaveslr(&*Arbre, &Leaves);
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        if ((P != NULL))
+        {
+            /* Affectation globale de structure */
+            S->Champ1 = Info_ATib(P)->Champ1;
+            S->Champ2 = Info_ATib(P)->Champ2;
+            ;
+            Aff_struct2_Tib(S, True);
+            Aff_info_ATib(P, S);
+        };
+        if ((P != NULL))
+        {
+            _Px1 = Fg_ATib(P);
+            _Px2 = Fd_ATib(P);
+            /* PROCESS */
+            if (((Isleaf(&_Px1)) && (Isleaf(&_Px2))))
+            {
+                printf(" %d", Struct1_Tib(Info_ATib(P)));
+                /* Creation de la liste apartir des noeuds visitee*/
+                if ((*Llr == NULL))
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    *Llr = N;
+                    Parclist = N;
+                }
+                else
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    Aff_adr_Li(Parclist, N);
+                    Parclist = Suivant_Li(Parclist);
+                };
+            };
+            Perep = Pere_ATib(P);
+            if ((Perep != NULL))
+            {
+                if (((Isleaf(&Perep)) && (Isleaf(&Perep))))
+                {
+                    Enfiler_FATib(Leaves, Perep);
+                };
+            };
+        };
+    };
+}
+void LllrAnimated(Pointeur_ATib *Arbre, Pointeur_Li *Llr)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_ATib Perep = NULL;
+    Pointeur_ATib Prec = NULL;
+    Typestr_Tib S;
+    Pointeur_FATib Leaves = NULL;
+    Pointeur_Li N = NULL;
+    Pointeur_Li Parclist = NULL;
+    Pointeur_Li Parc = NULL;
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    *Llr = NULL;
+    Resetvisited(&*Arbre);
+    Creerfile_FATib(&Leaves);
+    Extractleaveslr(&*Arbre, &Leaves);
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        if ((P != NULL))
+        {
+            /* Affectation globale de structure */
+            S->Champ1 = Info_ATib(P)->Champ1;
+            S->Champ2 = Info_ATib(P)->Champ2;
+            ;
+            Aff_struct2_Tib(S, True);
+            Aff_info_ATib(P, S);
+        };
+        if ((P != NULL))
+        {
+            _Px1 = Fg_ATib(P);
+            _Px2 = Fd_ATib(P);
+            /* PROCESS */
+            if (((Isleaf(&_Px1)) && (Isleaf(&_Px2))))
+            {
+                /* Creation de la liste apartir des noeuds visitee*/
+                system("cls");
+                TreePrinter(&*Arbre, Struct1_Tib(Info_ATib(P)));
+                if ((*Llr == NULL))
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    *Llr = N;
+                    Parclist = N;
+                }
+                else
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    Aff_adr_Li(Parclist, N);
+                    Parclist = Suivant_Li(Parclist);
+                };
+                printf("\n\n");
+                printFancyLinkedList(*Llr, 9);
+                Sleep(450);
+            };
+            Perep = Pere_ATib(P);
+            if ((Perep != NULL))
+            {
+                if (((Isleaf(&Perep)) && (Isleaf(&Perep))))
+                {
+                    Enfiler_FATib(Leaves, Perep);
+                };
+            };
+        };
+        Sleep(450);
+    };
+}
+/*-----------------------------------------------------------*/
+/*-------------------------- LLRL ---------------------------*/
+/*-----------------------------------------------------------*/
+void Llrl(Pointeur_ATib *Arbre, Pointeur_Li *Llr)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_ATib Perep = NULL;
+    Pointeur_ATib Prec = NULL;
+    Typestr_Tib S;
+    Pointeur_FATib Leaves = NULL;
+    bool Boolg;
+    bool Boold;
+    Pointeur_Li N = NULL;
+    Pointeur_Li Parclist = NULL;
+    Pointeur_Li Parc = NULL;
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    *Llr = NULL;
+    Resetvisited(&*Arbre);
+    Creerfile_FATib(&Leaves);
+    Extractleavesrl(&*Arbre, &Leaves);
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        if ((P != NULL))
+        {
+            /* Affectation globale de structure */
+            S->Champ1 = Info_ATib(P)->Champ1;
+            S->Champ2 = Info_ATib(P)->Champ2;
+            ;
+            Aff_struct2_Tib(S, True);
+            Aff_info_ATib(P, S);
+        };
+        if ((P != NULL))
+        {
+            _Px1 = Fg_ATib(P);
+            _Px2 = Fd_ATib(P);
+            /* PROCESS */
+            if (((Isleaf(&_Px1)) && (Isleaf(&_Px2))))
+            {
+                /* Creation de la liste apartir des noeuds visitee*/
+                if ((*Llr == NULL))
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    *Llr = N;
+                    Parclist = N;
+                }
+                else
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    Aff_adr_Li(Parclist, N);
+                    Parclist = Suivant_Li(Parclist);
+                };
+            };
+            Perep = Pere_ATib(P);
+            if ((Perep != NULL))
+            {
+                if (((Isleaf(&Perep))))
+                {
+                    Enfiler_FATib(Leaves, Perep);
+                };
+            };
+        };
+    };
+}
+
+void LlrlAnimated(Pointeur_ATib *Arbre, Pointeur_Li *Llr)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_ATib Perep = NULL;
+    Pointeur_ATib Prec = NULL;
+    Typestr_Tib S;
+    Pointeur_FATib Leaves = NULL;
+    bool Boolg;
+    bool Boold;
+    Pointeur_Li N = NULL;
+    Pointeur_Li Parclist = NULL;
+    Pointeur_Li Parc = NULL;
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    *Llr = NULL;
+    Resetvisited(&*Arbre);
+    Creerfile_FATib(&Leaves);
+    Extractleavesrl(&*Arbre, &Leaves);
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        if ((P != NULL))
+        {
+            /* Affectation globale de structure */
+            S->Champ1 = Info_ATib(P)->Champ1;
+            S->Champ2 = Info_ATib(P)->Champ2;
+            ;
+            Aff_struct2_Tib(S, True);
+            Aff_info_ATib(P, S);
+        };
+        if ((P != NULL))
+        {
+            _Px1 = Fg_ATib(P);
+            _Px2 = Fd_ATib(P);
+            /* PROCESS */
+            if (((Isleaf(&_Px1)) && (Isleaf(&_Px2))))
+            {
+                system("cls");
+                TreePrinter(&*Arbre, Struct1_Tib(Info_ATib(P)));
+                /* Creation de la liste apartir des noeuds visitee*/
+                if ((*Llr == NULL))
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    *Llr = N;
+                    Parclist = N;
+                }
+                else
+                {
+                    Allouer_Li(&N);
+                    Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                    Aff_adr_Li(Parclist, N);
+                    Parclist = Suivant_Li(Parclist);
+                };
+
+                printf("\n\n");
+                printFancyLinkedList(*Llr, 9);
+                Sleep(450);
+            };
+            Perep = Pere_ATib(P);
+            if ((Perep != NULL))
+            {
+                if (((Isleaf(&Perep))))
+                {
+                    Enfiler_FATib(Leaves, Perep);
+                };
+            };
+        };
+    };
+}
+/*---------------------------------------------------------------*/
+/*-------------------------- COPYTREE ---------------------------*/
+/*---------------------------------------------------------------*/
+void Copytree(Pointeur_ATib *A1, Pointeur_ATib *C)
+{
+    /** Variables locales **/
+    bool Done;
+    Typestr_Tib _Px1;
+    Pointeur_ATib _Px2 = NULL;
+    Pointeur_ATib _Px3 = NULL;
+
+    /** Corps du module **/
+    _Px1 = malloc(sizeof(Type_Tib));
+    if (*A1 != NULL)
+    {
+        _Px1 = Info_ATib(*A1);
+        Insertbst(&_Px1, &*C, &Done);
+        _Px2 = Fg_ATib(*A1);
+        Copytree(&_Px2, &*C);
+        _Px3 = Fd_ATib(*A1);
+        Copytree(&_Px3, &*C);
+    };
+}
+/*----------------------------------------------------------------*/
+/*---------------------------- Search ----------------------------*/
+/*----------------------------------------------------------------*/
+void Search(Pointeur_ATib *R, int *Val, Pointeur_ATib *P, Pointeur_ATib *Q)
+{
+    /** Variables locales **/
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    if ((*R == NULL))
+    {
+        *P = NULL;
+        *Q = NULL;
+    }
+    else
+    {
+        if ((Struct1_Tib(Info_ATib(*R)) == *Val))
+        {
+            *P = *R;
+            *Q = NULL;
+        }
+        else
+        {
+            if ((Struct1_Tib(Info_ATib(*R)) > *Val))
+            {
+                _Px1 = Fg_ATib(*R);
+                Search(&_Px1, &*Val, &*P, &*Q);
+            }
+            else
+            {
+                _Px2 = Fd_ATib(*R);
+                Search(&_Px2, &*Val, &*P, &*Q);
+            };
+            if ((*Q == NULL))
+            {
+                *Q = *R;
+            };
+        };
+    };
+}
+/*----------------------------------------------------------------*/
+/*---------------------------- Delete ----------------------------*/
+/*----------------------------------------------------------------*/
+void Delete(Pointeur_ATib *R, int *Val)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_ATib Perep = NULL;
+    Pointeur_ATib Q = NULL;
+    Pointeur_ATib Pereq = NULL;
+
+    /** Corps du module **/
+    Search(&*R, &*Val, &P, &Perep);
+    if ((P == NULL))
+    {
+        printf(" %s", " VALUE DOESNT EXIST ");
+    }
+    else
+    {
+        if ((Fg_ATib(P) == NULL))
+        {
+            if ((Fd_ATib(P) == NULL))
+            {
+                if ((Perep != NULL))
+                {
+                    if ((Fg_ATib(Perep) == P))
+                    {
+                        Aff_fg_ATib(Perep, NULL);
+                    }
+                    else
+                    {
+                        Aff_fd_ATib(Perep, NULL);
+                    };
+                }
+                else
+                {
+                    *R = NULL;
+                };
+            }
+            else
+            {
+                if ((Perep != NULL))
+                {
+                    if ((P == Fg_ATib(Perep)))
+                    {
+                        Aff_fg_ATib(Perep, Fd_ATib(P));
+                    }
+                    else
+                    {
+                        Aff_fd_ATib(Perep, Fd_ATib(P));
+                    };
+                }
+                else
+                {
+                    *R = Fd_ATib(P);
+                };
+            };
+        }
+        else
+        {
+            if ((Fd_ATib(P) == NULL))
+            {
+                if ((Perep != NULL))
+                {
+                    if ((P == Fg_ATib(Perep)))
+                    {
+                        Aff_fg_ATib(Perep, Fg_ATib(P));
+                    }
+                    else
+                    {
+                        Aff_fd_ATib(Perep, Fg_ATib(P));
+                    };
+                }
+                else
+                {
+                    *R = Fg_ATib(P);
+                };
+            }
+            else
+            {
+                Q = Fd_ATib(P);
+                Pereq = P;
+                while ((Fg_ATib(Q) != NULL))
+                {
+                    Pereq = Q;
+                    Q = Fg_ATib(Q);
+                };
+                Aff_info_ATib(P, Info_ATib(Q));
+                if ((Q == Fg_ATib(Pereq)))
+                {
+                    ;
+                    Aff_fg_ATib(Pereq, Fd_ATib(Q));
+                }
+                else
+                {
+                    Aff_fd_ATib(Pereq, Fd_ATib(Q));
+                };
+                P = Q;
+            };
+        };
+        Liberernoeud_ATib(P);
+    };
+}
+/*-------------------------------------------------------------------*/
+/*---------------------------- CHECKLLLR ----------------------------*/
+/*-------------------------------------------------------------------*/
+void Checklllr(Pointeur_ATib *Arbre)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_ATib Perep = NULL;
+    Pointeur_ATib Prec = NULL;
+    Pointeur_ATib Node = NULL;
+    Typestr_Tib S;
+    Pointeur_FATib Leaves = NULL;
+    int Num;
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    Node = NULL;
+    Resetvisited(&*Arbre);
+    Copytree(&*Arbre, &Node);
+    /* Create a queue to store leaves */
+    Creerfile_FATib(&Leaves);
+    /* Extract leaves from the tree and enqueue them */
+    Extractleaveslr(&Node, &Leaves);
+    /* Process leaves until the queue is empty */
+    /* Dequeue a leaf node */
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        /* Check if the dequeued node is not NIL */
+        /* Retrieve the parent of the dequeued node */
+        if ((P != NULL))
+        {
+            Perep = Pere_ATib(P);
+            /* If the dequeued node is a logical leaf (both children are leaves), delete it */
+            _Px1 = Fg_ATib(P);
+            _Px2 = Fd_ATib(P);
+            /* PROCESS */
+            /* Extract the value of the leaf node */
+            if (((Isleaf(&_Px1)) && (Isleaf(&_Px2))))
+            {
+                Num = Struct1_Tib(Info_ATib(P));
+                /* Delete the leaf node from the tree */
+                Delete(&Node, &Num);
+                /* Revisit parent of the deleted leaf */
+                /* If parent is now a logical leaf, enqueue it for processing */
+                if ((Perep != NULL))
+                {
+                    if ((Isleaf(&Perep)))
+                    {
+                        Enfiler_FATib(Leaves, Perep);
+                    };
+                };
+            }
+            /* Otherwise, if either child is not a leaf, enqueue both children for processing */
+            else
+            {
+                if ((Fg_ATib(P) != NULL))
+                {
+                    Enfiler_FATib(Leaves, Fg_ATib(P));
+                };
+                if ((Fd_ATib(P) != NULL))
+                {
+                    Enfiler_FATib(Leaves, Fd_ATib(P));
+                };
+            };
+        };
+    };
+    /* Print the tree in inorder traversal */
+    if ((Node == NULL))
+    {
+        printf("\n\n\n\n   \033[1;32mTRAVERSAL TWO IS CORRECT!\033[0m \n");
+    };
+}
+
+void ChecklllrAnimated(Pointeur_ATib *Arbre)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_ATib Perep = NULL;
+    Pointeur_ATib Prec = NULL;
+    Pointeur_ATib Node = NULL;
+    Typestr_Tib S;
+    Pointeur_FATib Leaves = NULL;
+    int Num;
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    Node = NULL;
+    Resetvisited(&*Arbre);
+    Copytree(&*Arbre, &Node);
+    /* Create a queue to store leaves */
+    Creerfile_FATib(&Leaves);
+    /* Extract leaves from the tree and enqueue them */
+    Extractleaveslr(&Node, &Leaves);
+    /* Process leaves until the queue is empty */
+    /* Dequeue a leaf node */
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        /* Check if the dequeued node is not NIL */
+        /* Retrieve the parent of the dequeued node */
+        if ((P != NULL))
+        {
+            Perep = Pere_ATib(P);
+            /* If the dequeued node is a logical leaf (both children are leaves), delete it */
+            _Px1 = Fg_ATib(P);
+            _Px2 = Fd_ATib(P);
+            /* PROCESS */
+            /* Extract the value of the leaf node */
+            if (((Isleaf(&_Px1)) && (Isleaf(&_Px2))))
+            {
+                system("cls");
+                TreePrinter(&Node, Struct1_Tib(Info_ATib(P)));
+                Num = Struct1_Tib(Info_ATib(P));
+                /* Delete the leaf node from the tree */
+                Delete(&Node, &Num);
+                /* Revisit parent of the deleted leaf */
+                /* If parent is now a logical leaf, enqueue it for processing */
+                if ((Perep != NULL))
+                {
+                    if ((Isleaf(&Perep)))
+                    {
+                        Enfiler_FATib(Leaves, Perep);
+                    };
+                };
+                Sleep(450);
+            }
+            /* Otherwise, if either child is not a leaf, enqueue both children for processing */
+            else
+            {
+                if ((Fg_ATib(P) != NULL))
+                {
+                    Enfiler_FATib(Leaves, Fg_ATib(P));
+                };
+                if ((Fd_ATib(P) != NULL))
+                {
+                    Enfiler_FATib(Leaves, Fd_ATib(P));
+                };
+            };
+        };
+    };
+    /* Print the tree in inorder traversal */
+    if ((Node == NULL))
+    {
+        printf("\n\n\n\n   \033[1;32mTRAVERSAL TWO IS CORRECT!\033[0m \n");
+    };
+}
+
+/*-------------------------------------------------------------------*/
+/*---------------------------- CHECKLLRL ----------------------------*/
+/*-------------------------------------------------------------------*/
+void Checkllrl(Pointeur_ATib *Arbre)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_ATib Perep = NULL;
+    Pointeur_ATib Prec = NULL;
+    Pointeur_ATib Node = NULL;
+    Typestr_Tib S;
+    Pointeur_FATib Leaves = NULL;
+    int Num;
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    Node = NULL;
+    Resetvisited(&*Arbre);
+    Copytree(&*Arbre, &Node);
+    /* Create a queue to store leaves */
+    Creerfile_FATib(&Leaves);
+    /* Extract leaves from the tree and enqueue them */
+    Extractleavesrl(&Node, &Leaves);
+    /* Process leaves until the queue is empty */
+    /* Dequeue a leaf node */
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        /* Check if the dequeued node is not NIL */
+        /* Retrieve the parent of the dequeued node */
+        if ((P != NULL))
+        {
+            Perep = Pere_ATib(P);
+            /* If the dequeued node is a logical leaf (both children are leaves), delete it */
+            _Px1 = Fg_ATib(P);
+            _Px2 = Fd_ATib(P);
+            /* Extract the value of the leaf node */
+            if (((Isleaf(&_Px1)) && (Isleaf(&_Px2))))
+            {
+                // Process
+                Num = Struct1_Tib(Info_ATib(P));
+
+                /* Delete the leaf node from the tree */
+                Delete(&Node, &Num);
+                /* Revisit parent of the deleted leaf */
+                /* If parent is now a logical leaf, enqueue it for processing */
+                if ((Perep != NULL))
+                {
+                    if ((Isleaf(&Perep)))
+                    {
+                        Enfiler_FATib(Leaves, Perep);
+                    };
+                };
+            }
+            /* Otherwise, if either child is not a leaf, enqueue both children for processing */
+            else
+            {
+                if ((Fg_ATib(P) != NULL))
+                {
+                    Enfiler_FATib(Leaves, Fg_ATib(P));
+                };
+                if ((Fd_ATib(P) != NULL))
+                {
+                    Enfiler_FATib(Leaves, Fd_ATib(P));
+                };
+            };
+        };
+    };
+    /* Print the tree in inorder traversal */
+    if ((Node == NULL))
+    {
+        printf("\n\n\n\n   \033[1;32mTRAVERSAL FOUR IS CORRECT!\033[0m \n");
+    };
+}
+
+void CheckllrlAnimated(Pointeur_ATib *Arbre)
+{
+    /** Variables locales **/
+    Pointeur_ATib P = NULL;
+    Pointeur_ATib Perep = NULL;
+    Pointeur_ATib Prec = NULL;
+    Pointeur_ATib Node = NULL;
+    Typestr_Tib S;
+    Pointeur_FATib Leaves = NULL;
+    int Num;
+    Pointeur_ATib _Px1 = NULL;
+    Pointeur_ATib _Px2 = NULL;
+
+    /** Corps du module **/
+    S = malloc(sizeof(Type_Tib));
+    Node = NULL;
+    Resetvisited(&*Arbre);
+    Copytree(&*Arbre, &Node);
+    /* Create a queue to store leaves */
+    Creerfile_FATib(&Leaves);
+    /* Extract leaves from the tree and enqueue them */
+    Extractleavesrl(&Node, &Leaves);
+    /* Process leaves until the queue is empty */
+    /* Dequeue a leaf node */
+    while ((Filevide_FATib(Leaves) == False))
+    {
+        Defiler_FATib(Leaves, &P);
+        /* Check if the dequeued node is not NIL */
+        /* Retrieve the parent of the dequeued node */
+        if ((P != NULL))
+        {
+            Perep = Pere_ATib(P);
+            /* If the dequeued node is a logical leaf (both children are leaves), delete it */
+            _Px1 = Fg_ATib(P);
+            _Px2 = Fd_ATib(P);
+            /* Extract the value of the leaf node */
+            if (((Isleaf(&_Px1)) && (Isleaf(&_Px2))))
+            {
+                // Process
+                system("cls");
+                TreePrinter(&Node, Struct1_Tib(Info_ATib(P)));
+                Num = Struct1_Tib(Info_ATib(P));
+
+                /* Delete the leaf node from the tree */
+                Delete(&Node, &Num);
+                /* Revisit parent of the deleted leaf */
+                /* If parent is now a logical leaf, enqueue it for processing */
+                if ((Perep != NULL))
+                {
+                    if ((Isleaf(&Perep)))
+                    {
+                        Enfiler_FATib(Leaves, Perep);
+                    };
+                };
+                Sleep(450);
+            }
+            /* Otherwise, if either child is not a leaf, enqueue both children for processing */
+            else
+            {
+                if ((Fg_ATib(P) != NULL))
+                {
+                    Enfiler_FATib(Leaves, Fg_ATib(P));
+                };
+                if ((Fd_ATib(P) != NULL))
+                {
+                    Enfiler_FATib(Leaves, Fd_ATib(P));
+                };
+            };
+        };
+    };
+    /* Print the tree in inorder traversal */
+    if ((Node == NULL))
+    {
+        printf("\n\n\n\n   \033[1;32mTRAVERSAL FOUR IS CORRECT!\033[0m \n");
+    };
+}
+
+
+/*---------------------------------------------------------------------*/
+/*----------------------------- REMOVEDUPS ----------------------------*/
+/*---------------------------------------------------------------------*/
+void Removedups(Pointeur_Li *List)
+{
+    /** Variables locales **/
+    Pointeur_Li P = NULL;
+    Pointeur_Li Precp = NULL;
+    Pointeur_Li Q = NULL;
+    Pointeur_Li Precq = NULL;
+    Pointeur_Li Temp = NULL;
+    int Val;
+
+    /** Corps du module **/
+    if ((*List != NULL))
+    {
+        P = *List;
+        while ((P != NULL))
+        {
+            Val = Valeur_Li(P);
+            Precq = P;
+            Q = Suivant_Li(P);
+            while ((Q != NULL))
+            {
+                if ((Valeur_Li(Q) == Val))
+                {
+                    Temp = Suivant_Li(Q);
+                    Aff_adr_Li(Precq, Temp);
+                    Liberer_Li(Q);
+                    Q = Temp;
+                }
+                else
+                {
+                    Precq = Q;
+                    Q = Suivant_Li(Q);
+                };
+            };
+            Precp = P;
+            P = Suivant_Li(P);
+        };
+    };
+}
+/*---------------------------------------------------------------------*/
+/*----------------------------- CHECKBBLR -----------------------------*/
+/*---------------------------------------------------------------------*/
+void Checkbblr(Pointeur_ATib *Arbre, Pointeur_Li *L1, Pointeur_Li *L2)
+{
+    /** Variables locales **/
+    Pointeur_Li Parc1 = NULL;
+    Pointeur_Li Parc2 = NULL;
+    Pointeur_Li N = NULL;
+    Pointeur_FATib Queue = NULL;
+    bool Done;
+
+    /** Corps du module **/
+    *L2 = NULL;
+    Creerfile_FATib(&Queue);
+    Extractleaveslr(&*Arbre, &Queue);
+    while ((Filevide_FATib(Queue) == False))
+    {
+        Defiler_FATib(Queue, &P);
+        while ((P != NULL))
+        {
+            if ((*L2 == NULL))
+            {
+                Allouer_Li(&N);
+                Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                *L2 = N;
+                Parc = N;
+            }
+            else
+            {
+                Allouer_Li(&N);
+                Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                Aff_adr_Li(Parc, N);
+                Parc = Suivant_Li(Parc);
+            };
+            P = Pere_ATib(P);
+        };
+    };
+    Removedups(&*L2);
+    Done = True;
+    Parc1 = *L1;
+    Parc2 = *L2;
+    while (((Parc1 != NULL) && (Parc2 != NULL)))
+    {
+        if ((Valeur_Li(Parc1) != Valeur_Li(Parc2)))
+        {
+            Done = False;
+        };
+        Parc1 = Suivant_Li(Parc1);
+        Parc2 = Suivant_Li(Parc2);
+    };
+    if ((Done == True))
+    {
+        printf("\n\n\n\n   \033[1;32mTRAVERSAL ONE IS CORRECT!\033[0m \n");
+    };
+}
+/*---------------------------------------------------------------------*/
+/*----------------------------- CHECKBBRL -----------------------------*/
+/*---------------------------------------------------------------------*/
+void Checkbbrl(Pointeur_ATib *Arbre, Pointeur_Li *L1, Pointeur_Li *L2)
+{
+    /** Variables locales **/
+    Pointeur_Li Parc1 = NULL;
+    Pointeur_Li Parc2 = NULL;
+    Pointeur_Li N = NULL;
+    Pointeur_FATib Queue = NULL;
+    bool Done;
+
+    /** Corps du module **/
+    *L2 = NULL;
+    Creerfile_FATib(&Queue);
+    Extractleavesrl(&*Arbre, &Queue);
+    while ((Filevide_FATib(Queue) == False))
+    {
+        Defiler_FATib(Queue, &P);
+        while ((P != NULL))
+        {
+            if ((*L2 == NULL))
+            {
+                Allouer_Li(&N);
+                Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                *L2 = N;
+                Parc = N;
+            }
+            else
+            {
+                Allouer_Li(&N);
+                Aff_val_Li(N, Struct1_Tib(Info_ATib(P)));
+                Aff_adr_Li(Parc, N);
+                Parc = Suivant_Li(Parc);
+            };
+            P = Pere_ATib(P);
+        };
+    };
+    Removedups(&*L2);
+    Done = True;
+    Parc1 = *L1;
+    Parc2 = *L2;
+    while (((Parc1 != NULL) && (Parc2 != NULL)))
+    {
+        if ((Valeur_Li(Parc1) != Valeur_Li(Parc2)))
+        {
+            Done = False;
+        };
+        Parc1 = Suivant_Li(Parc1);
+        Parc2 = Suivant_Li(Parc2);
+    };
+    if ((Done == True))
+    {
+        printf("\n\n\n\n   \033[1;32mTRAVERSAL THREE IS CORRECT!\033[0m \n");
+    };
+}
+
+//-------------------------------------------------------------
+
+void printloading()
+{
+    system("cls");
+    Sleep(200);
+    printf("\033[0m\n\n\n\n\t\t\t\t\t\t       \033[34m\033[1mLoading.\033[0m\n\n");
+    Sleep(200);
+    system("cls");
+    printf("\033[0m\n\n\n\n\t\t\t\t\t\t       \033[34m\033[1mLoading..\033[0m\n\n");
+    Sleep(200);
+    system("cls");
+    printf("\033[0m\n\n\n\n\t\t\t\t\t\t       \033[34m\033[1mLoading...\033[0m\n\n");
+    Sleep(200);
+    system("cls");
+    printf("\033[0m\n\n\n\n\t\t\t\t\t\t       \033[34m\033[1mDONE\033[0m\n\n");
+    Sleep(200);
+    system("cls");
+}
+
+void highlightLine(const char *str)
+{
+    printf(ANSI_COLOR_BG_WHITE ANSI_COLOR_BLACK "%s" ANSI_COLOR_RESET "\n", str);
+}
+
+//--------------------------------------------------------------------
+
+void printESI()
+{
+    system("cls");
+    printf("\n\t        \033[0;107m                  \033[0m          \033[0;107m                  \033[0m     \033[0;104m         \033[0m \n");
+    Sleep(150);
+    printf("\t      \033[0;107m                      \033[0m      \033[0;107m                      \033[0m   \033[0;104m         \033[0m  \n");
+    Sleep(150);
+    printf("\t     \033[0;107m      \033[0m            \033[0;107m      \033[0m    \033[0;107m      \033[0m            \033[0;107m      \033[0m \n");
+    Sleep(150);
+    printf("\t     \033[0;107m      \033[0m            \033[0;107m      \033[0m    \033[0;107m      \033[0m            \033[0;107m      \033[0m    \033[0;104m         \033[0m \n");
+    Sleep(150);
+    printf("\t     \033[0;107m      \033[0m            \033[0;107m      \033[0m    \033[0;107m      \033[0m            \033[0;107m      \033[0m             \n");
+    Sleep(150);
+    printf("\t     \033[0;107m      \033[0m            \033[0;107m      \033[0m    \033[0;107m      \033[0m            \033[0;107m      \033[0m    \033[0;107m       \033[0m  \n");
+    Sleep(150);
+    printf("\t     \033[0;107m      \033[0m            \033[0;107m      \033[0m    \033[0;107m      \033[0m                      \033[0;107m       \033[0m       L'ECOLE  NATIONALE\n");
+    Sleep(150);
+    printf("\t     \033[0;107m                        \033[0m    \033[0;107m                        \033[0m    \033[0;107m       \033[0m  \n");
+    Sleep(150);
+    printf("\t     \033[0;107m                        \033[0m    \033[0;107m                        \033[0m    \033[0;107m       \033[0m       SUPERIEURE\n");
+    Sleep(150);
+    printf("\t     \033[0;107m      \033[0m                                        \033[0;107m      \033[0m    \033[0;107m       \033[0m  \n");
+    Sleep(150);
+    printf("\t     \033[0;107m      \033[0m            \033[0;107m      \033[0m    \033[0;107m      \033[0m            \033[0;107m      \033[0m    \033[0;107m       \033[0m       D'INFORMATIQUE\n");
+    Sleep(150);
+    printf("\t      \033[0;107m      \033[0m          \033[0;107m      \033[0m      \033[0;107m      \033[0m          \033[0;107m      \033[0m     \033[0;107m       \033[0m  \n");
+    Sleep(150);
+    printf("\t      \033[0;107m                      \033[0m      \033[0;107m                      \033[0m     \033[0;107m       \033[0m  \n");
+    Sleep(150);
+    printf("\t        \033[0;107m                  \033[0m          \033[0;107m                  \033[0m       \033[0;107m       \033[0m  \n\n\n");
+    Sleep(220);
+}
+
+void Welcome()
+{
+    system("cls");
+    printf("\t\t\t\033[96m                People's Democratic Republic of Algeria           \033[0m\n", 130, 130, 130);
+    printf("\t\t\t\033[96m         Ministry of Higher Education and Scientific Research\033[0m\n", 130, 130);
+    printf("\t\t\t      \033[96m _______________________________________________________\n");
+    printf("\t\t\t      \033[96m|        \033[92m_______\033[0m    \033[91m _______\033[0m    \033[97m _\033[0m                      \033[96m|\n");
+    printf("\t\t\t      \033[96m|       \033[92m|  _____|\033[0m   \033[91m|  _____|\033[0m   \033[97m| |\033[0m  \033[92mHigher National\033[0m    \033[96m|\n", 130);
+    printf("\t\t\t      \033[96m|       \033[92m| |_____\033[0m    \033[91m| |_____\033[0m    \033[97m| |\033[0m                     \033[96m|\n");
+    printf("\t\t\t      \033[96m|       \033[92m|  _____|\033[0m   \033[91m|_____  |\033[0m   \033[97m| |\033[0m  \033[91mSchool of\033[0m          \033[96m|\n", 130);
+    printf("\t\t\t      \033[96m|       \033[92m| |_____\033[0m    \033[91m _____| |\033[0m   \033[97m| |\033[0m                     \033[96m|\n");
+    printf("\t\t\t      \033[96m|       \033[92m|_______|\033[0m   \033[91m|_______|\033[0m   \033[97m|_|\033[0m  \033[97mComputer Science\033[0m   \033[96m|\n");
+    printf("\t\t\t      \033[96m|_______________________________________________________|\033[0m\n\n");
+
+    printf("\t\t\t\t\033[96m     PCI - First Year - Scholar Year: 2022/2023 \n");
+    printf("\t\t\t\033[96m ___________________________________________________________________\n");
+    printf("\t\t\t\033[96m|                                                                   |\n");
+    printf("\t\t\t\033[96m|             REALISED By :  \033[97mHADJI SIDALI \033[96m                          |\n");
+    printf("\t\t\t\033[96m|                                 &                                 |\n");
+    printf("\t\t\t\033[96m|                             \033[97mADI ADLANE\033[96m                            |\n");
+    printf("\t\t\t\033[96m|                                                                   |\n");
+    printf("\t\t\t\033[96m|                                                                   |\n");
+    printf("\t\t\t\033[96m|               SECTION :  \033[97mB\033[96m          GROUPE: \033[97m05\033[96m                    |\n");
+    printf("\t\t\t\033[96m|                                                                   |\n");
+    printf("\t\t\t\033[96m|                   TP2 :  \033[97mBinary Search Trees\033[96m                      |\n");
+    printf("\t\t\t\033[96m|                                                                   |\n");
+    printf("\t\t\t\033[96m|                       <  \033[97mTree Traversal\033[96m  >                        |\n");
+    printf("\t\t\t\033[96m|                         < \033[97m Techniques\033[96m  >                          |\n");
+    printf("\t\t\t\033[96m|___________________________________________________________________|\n\n\n");
+
+    printf("\t\t\t                            \033[91mPlease                                 \n");
+    printf("\t\t\t                  Click any key to continue...\033[0m               ");
+    getch();
+
+    system("cls");
+}
+
+void printSubMenu1(int arrowpos)
+{
+    system("cls");
+    int maxopt = 3;
+    char options[][150] = {" Create pre-defined tree ", " Create different trees ", " Main Menu "};
+    printf("\t       \033[34m\033[1mCreating trees\033[0m\n\n");
+    for (int i = 0; i < maxopt; i++)
+    {
+        if (arrowpos == i + 1)
+        {
+            printf("\t\t --->     ");
+            highlightLine(options[i]);
+            printf("\n");
+        }
+        else
+        {
+            printf("\t\t       %s\n\n", options[i]);
+        }
+    }
+}
+
+void SubMenu1(Pointeur_ATib *Arbre, Typevect_V10ATib *Arbarray, int *opt1, int *opt2)
+
+{
+    int i = 0;
+    *opt1 = 0;
+    *opt2 = 0;
+    do
+    {
+        system("cls");
+        printSubMenu1(1);
+        i = 1;
+        int maxopt = 3;
+        char ch = 0;
+    submenu1:
+        while (ch != 13)
+        {
+            ch = getch();
+            switch (ch)
+            {
+            case 72:
+                if (i != 1)
+                {
+                    i--;
+                    printSubMenu1(i);
+                }
+                else
+                {
+                    i = maxopt;
+                    printSubMenu1(i);
+                }
+                break;
+            case 80:
+                if (i != maxopt)
+                {
+                    i++;
+                    printSubMenu1(i);
+                }
+                else
+                {
+                    i = 1;
+                    printSubMenu1(i);
+                }
+                break;
+            default:
+                goto submenu1;
+                break;
+            }
+        }
+
+        switch (i)
+        {
+        case 2:
+            printloading();
+            if (*opt2 == 1)
+            {
+                printf("\n\n\n\n    \033[1;31mTrees are already created !\033[0m \n");
+            }
+            else
+            {
+                Createbsts(&*Arbarray);
+                printf("\n\n\n\n    The different trees have been created \033[1;32mSuccessfully\033[0m \n");
+                *opt2 = 1;
+            }
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 1:
+            printloading();
+            if (*opt1 == 1)
+            {
+                printf("\n\n\n\n    \033[1;31mTree is already created !\033[0m \n");
+            }
+            else
+            {
+                S_S.Champ1 = 45;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 20;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 10;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 35;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 65;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 55;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 85;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 50;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 58;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 75;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 95;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 56;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 60;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 90;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 98;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 57;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 62;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                S_S.Champ1 = 88;
+                S_S.Champ2 = False;
+                Init_struct_Tib(S, S_S);
+                Insertbst(&S, &*Arbre, &Done);
+                *opt1 = 1;
+                printf("\n\n\n\n    The tree has been created \033[1;32mSuccessfully\033[0m \n \n \n ");
+
+                // The print tree function
+            }
+
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 3:
+            printloading();
+            system("cls");
+            break;
+        default:
+            break;
+        }
+    } while (i != 3);
+}
+
+void printSubMenu2(int arrowpos)
+{
+    system("cls");
+    int maxopt = 6;
+    char options[][150] = {"Traversal 1 ( Branch by branch , left to right ) ", "Traversal 2 ( Leaf by Leaf , left to right )", "Traversal 3 ( Branch by Branch , right to left )", "Traversal 4 ( Leaf by leaf , right to left )", "All the traversals", "Main Menu"};
+    printf("\t       \033[34m\033[1mTraversals\033[0m\n\n");
+    for (int i = 0; i < maxopt; i++)
+    {
+        if (arrowpos == i + 1)
+        {
+            printf("\t\t --->     ");
+            highlightLine(options[i]);
+            printf("\n");
+        }
+        else
+        {
+            printf("\t\t       %s\n\n", options[i]);
+        }
+    }
+}
+
+void printSubSubMenu2(int arrowpos)
+{
+    system("cls");
+    int maxopt = 2;
+    char options[][150] = {" Use the pre-defined tree ", " Use the different trees "};
+    printf("\t       \033[34m\033[1mChoosing the tree\033[0m\n\n");
+    for (int i = 0; i < maxopt; i++)
+    {
+        if (arrowpos == i + 1)
+        {
+            printf("\t\t --->     ");
+            highlightLine(options[i]);
+            printf("\n");
+        }
+        else
+        {
+            printf("\t\t       %s\n\n", options[i]);
+        }
+    }
+}
+
+void SubSubMenu2(int *j, int *opt1, int *opt2, int *bre)
+
+{
+    int i = 0;
+    int temppos = 0;
+    do
+    {
+        system("cls");
+        printSubSubMenu2(1);
+        i = 1;
+        int maxopt = 2;
+        char ch = 0;
+    subsubmenu2:
+        while (ch != 13)
+        {
+            ch = getch();
+            switch (ch)
+            {
+            case 72:
+                if (i != 1)
+                {
+                    i--;
+                    printSubSubMenu2(i);
+                }
+                else
+                {
+                    i = maxopt;
+                    printSubSubMenu2(i);
+                }
+                break;
+            case 80:
+                if (i != maxopt)
+                {
+                    i++;
+                    printSubSubMenu2(i);
+                }
+                else
+                {
+                    i = 1;
+                    printSubSubMenu2(i);
+                }
+                break;
+            default:
+                goto subsubmenu2;
+                break;
+            }
+        }
+
+        switch (i)
+        {
+        case 1:
+            printloading();
+            if (*opt1 == 1)
+            {
+                *j = 1;
+                printf("\n\n\n\n        Click Entrer to Continue . . .");
+            }
+            else
+            {
+                printf("\n\n\n\n   \033[1;31mPlease create the tree first!\033[0m \n");
+                *bre = 0;
+            }
+            getchar();
+            break;
+        case 2:
+            printloading();
+            if (*opt2 == 1)
+            {
+                *j = 2;
+            }
+            else
+            {
+                printf("\n\n\n\n   \033[1;31mPlease create the trees first!\033[0m \n");
+                *bre = 0;
+            }
+            printf("\n\n\n\n        Click Entrer to Continue . . .");
+            getchar();
+            break;
+        default:
+            break;
+        }
+    } while (i != 2 && i != 1);
+}
+
+void SubMenu2(Pointeur_ATib *Arbre, Typevect_V10ATib *Arbarray, Pointeur_Li *L1, Pointeur_Li *L2, Pointeur_Li *L3, Pointeur_Li *L4, int *opt1, int *opt2, int *opt3, int *opt4, int *opt5, int *opt6, Typevect_V10Li *TL1, Typevect_V10Li *TL2)
+
+{
+    int i = 0;
+    *opt1 = 0;
+    *opt2 = 0;
+    *opt3 = 0;
+    *opt4 = 0;
+    int bre;
+    int j;
+    Pointeur_ATib Node = NULL;
+    SubSubMenu2(&j, &*opt5, &*opt6, &bre);
+    if (bre == 0)
+    {
+        return;
+    }
+    do
+    {
+        system("cls");
+        printSubMenu2(1);
+        i = 1;
+        int maxopt = 6;
+        char ch = 0;
+    submenu2:
+        while (ch != 13)
+        {
+            ch = getch();
+            switch (ch)
+            {
+            case 72:
+                if (i != 1)
+                {
+                    i--;
+                    printSubMenu2(i);
+                }
+                else
+                {
+                    i = maxopt;
+                    printSubMenu2(i);
+                }
+                break;
+            case 80:
+                if (i != maxopt)
+                {
+                    i++;
+                    printSubMenu2(i);
+                }
+                else
+                {
+                    i = 1;
+                    printSubMenu2(i);
+                }
+                break;
+            default:
+                goto submenu2;
+                break;
+            }
+        }
+
+        switch (i)
+        {
+        case 1:
+            printloading();
+            *opt1 = 1;
+            printf("\n\n\n\033[1;32mTraversal One\033[0m \n\n");
+            if (j == 1)
+            {
+                BblrAnimated(&*Arbre, &*L1);
+            }
+            else if (j == 2)
+            {
+
+                for (int i = 1; i <= 10; i++)
+                {
+                    printf("Tree number \033[1;34m%d\033[0m\n", i);
+                    Node = Element_V10ATib(*Arbarray, i);
+                    Bblr(&Node, &*L1);
+                    printFancyLinkedList(*L1, 9);
+                    *L1 = NULL;
+                    Aff_element_V10Li(*TL1, i, *L1);
+                    printf("\n\n");
+                }
+            }
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 2:
+            printloading();
+            printf("\n\n\n\033[1;32mTraversal Two\033[0m \n\n");
+            *opt2 = 1;
+            if (j == 1)
+            {
+                LllrAnimated(&*Arbre, &*L2);
+            }
+            else if (j == 2)
+            {
+
+                for (int i = 1; i <= 10; i++)
+                {
+                    printf("Tree number \033[1;34m%d\033[0m\n", i);
+                    Node = Element_V10ATib(*Arbarray, i);
+                    Lllr(&Node, &*L2);
+                    printFancyLinkedList(*L2, 9);
+                    *L2 = NULL;
+                    printf("\n\n");
+                }
+            }
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 3:
+            printloading();
+            *opt3 = 1;
+            printf("\n\n\n\033[1;32mTraversal Three\033[0m \n\n");
+            if (j == 1)
+            {
+                BbrlAnimated(&*Arbre, &*L3);
+            }
+            else if (j == 2)
+            {
+
+                for (int i = 1; i <= 10; i++)
+                {
+                    printf("Tree number \033[1;34m%d\033[0m\n", i);
+                    Node = Element_V10ATib(*Arbarray, i);
+                    Bbrl(&Node, &*L3);
+                    printFancyLinkedList(*L3, 9);
+                    *L3 = NULL;
+                    Aff_element_V10Li(*TL2, i, *L3);
+                    printf("\n\n");
+                }
+            }
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 4:
+            printloading();
+            printf("\n\n\n\033[1;32mTraversal Four\033[0m \n\n");
+            *opt4 = 1;
+            if (j == 1)
+            {
+                LlrlAnimated(&*Arbre, &*L4);
+            }
+            else if (j == 2)
+            {
+
+                for (int i = 1; i <= 10; i++)
+                {
+                    printf("Tree number \033[1;34m%d\033[0m\n", i);
+                    Node = Element_V10ATib(*Arbarray, i);
+                    Llrl(&Node, &*L4);
+                    printFancyLinkedList(*L4, 9);
+
+                    *L4 = NULL;
+                    printf("\n\n");
+                }
+            }
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 5:
+            printloading();
+            *opt1 = 1;
+            *opt2 = 1;
+            *opt3 = 1;
+            *opt4 = 1;
+            printf("\n\n\n\n    The different treaverses have been done \033[1;32mSuccessfully\033[0m \n");
+            if (j == 1)
+            {
+                printf("\n\n\n\033[1;32mTraversal One\033[0m \n\n");
+                Bblr(&*Arbre, &*L1);
+                printFancyLinkedList(*L1, 9);
+                printf("\n\n\n\033[1;32mTraversal Two\033[0m \n\n");
+                Lllr(&*Arbre, &*L2);
+                printFancyLinkedList(*L2, 9);
+                printf("\n\n\n\033[1;32mTraversal Three\033[0m \n\n");
+                Bbrl(&*Arbre, &*L3);
+                printFancyLinkedList(*L3, 9);
+                printf("\n\n\n\033[1;32mTraversal Four\033[0m \n\n");
+                Llrl(&*Arbre, &*L4);
+                printFancyLinkedList(*L4, 9);
+            }
+            else if (j == 2)
+            {
+
+                for (int i = 1; i <= 10; i++)
+                {
+                    printf("Tree number \033[1;34m%d\033[0m\n", i);
+                    Node = Element_V10ATib(*Arbarray, i);
+                    printf("\n\n\n\033[1;32mTraversal One\033[0m \n\n");
+                    Bblr(&Node, &*L1);
+                    Aff_element_V10Li(*TL1, i, *L1);
+                    printFancyLinkedList(*L1, 9);
+
+                    printf("\n\n\n\033[1;32mTraversal Two\033[0m \n\n");
+                    Lllr(&Node, &*L2);
+                    printFancyLinkedList(*L2, 9);
+
+                    printf("\n\n\n\033[1;32mTraversal Three\033[0m \n\n");
+                    Bbrl(&Node, &*L3);
+                    Aff_element_V10Li(*TL2, i, *L3);
+                    printFancyLinkedList(*L3, 9);
+
+                    printf("\n\n\n\033[1;32mTraversal Four\033[0m \n\n");
+                    Llrl(&Node, &*L4);
+                    printFancyLinkedList(*L4, 9);
+                    *L1 = NULL;
+                    *L2 = NULL;
+                    *L3 = NULL;
+                    *L4 = NULL;
+                    printf("\n\n");
+                }
+            }
+            // Printing the resulting lists
+
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 6:
+            printloading();
+            system("cls");
+            break;
+        default:
+            break;
+        }
+    } while (i != 6);
+}
+
+void printSubMenu3(int arrowpos)
+{
+    system("cls");
+    int maxopt = 6;
+    char options[][150] = {" Check Traversal 1 ", " Check Traversal 2 ", " Check Traversal 3 ", " Check traversal 4 ", " Check them all", " Main Menu "};
+    printf("\t       \033[34m\033[1mCheck Traversals\033[0m\n\n");
+    for (int i = 0; i < maxopt; i++)
+    {
+        if (arrowpos == i + 1)
+        {
+            printf("\t\t --->     ");
+            highlightLine(options[i]);
+            printf("\n");
+        }
+        else
+        {
+            printf("\t\t       %s\n\n", options[i]);
+        }
+    }
+}
+
+void SubMenu3(Pointeur_ATib *Arbre, Typevect_V10ATib *Arbarray, Pointeur_Li *L1, Pointeur_Li *L3, Pointeur_Li *L2, int *opt1, int *opt2, int *opt3, int *opt4, int *opt5, int *opt6, Typevect_V10Li *TL1, Typevect_V10Li *TL2)
+
+{
+    int i = 0;
+    int bre;
+    int j;
+    Pointeur_Li templist = NULL;
+    Pointeur_ATib Node = NULL;
+    SubSubMenu2(&j, &*opt5, &*opt6, &bre);
+    if (bre == 0)
+    {
+        return;
+    }
+    do
+    {
+        system("cls");
+        printSubMenu2(1);
+        i = 1;
+        int maxopt = 6;
+        char ch = 0;
+    submenu2:
+        while (ch != 13)
+        {
+            ch = getch();
+            switch (ch)
+            {
+            case 72:
+                if (i != 1)
+                {
+                    i--;
+                    printSubMenu2(i);
+                }
+                else
+                {
+                    i = maxopt;
+                    printSubMenu2(i);
+                }
+                break;
+            case 80:
+                if (i != maxopt)
+                {
+                    i++;
+                    printSubMenu2(i);
+                }
+                else
+                {
+                    i = 1;
+                    printSubMenu2(i);
+                }
+                break;
+            default:
+                goto submenu2;
+                break;
+            }
+        }
+
+        switch (i)
+        {
+        case 1:
+            printloading();
+            if (*opt1 == 0)
+            {
+                printf("\n\n\n\n    \033[1;31mPlease travers the tree using Traversal one first !\033[0m \n");
+            }
+            else
+            {
+
+                printf("\n\n\n\033[1;32mChecking traversal one\033[0m \n\n");
+                if (j == 1)
+                {
+                    Checkbblr(&*Arbre, &*L1, &templist);
+                }
+                else if (j == 2)
+                {
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        printf("Tree number \033[1;34m%d\033[0m", i);
+                        Node = Element_V10ATib(*Arbarray, i);
+                        *L2 = Element_V10Li(*TL1, i);
+                        Checkbblr(&Node, &*L2, &templist);
+                        printf("\n\n");
+                    }
+                }
+            }
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 2:
+            printloading();
+            if (*opt2 == 0)
+            {
+                printf("\n\n\n\n    \033[1;31mPlease travers the tree using Traversal two first !\033[0m \n");
+            }
+            else
+            {
+                printf("\n\n\n\033[1;32mChecking traversal two\033[0m \n\n");
+                if (j == 1)
+                    ChecklllrAnimated(&*Arbre);
+                {
+                }
+                if (j == 2)
+                {
+
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        printf("Tree number \033[1;34m%d\033[0m", i);
+                        Node = Element_V10ATib(*Arbarray, i);
+                        Checklllr(&Node);
+                        printf("\n\n");
+                    }
+                }
+            }
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 3:
+            printloading();
+            if (*opt3 == 0)
+            {
+                printf("\n\n\n\n    \033[1;31mPlease travers the tree using Traversal three first !\033[0m \n");
+            }
+            else
+            {
+                printf("\n\n\n\033[1;32mChecking traversal three\033[0m \n\n");
+                if (j == 1)
+                {
+                    Checkbbrl(&*Arbre, &*L3, &templist);
+                }
+                else if (j == 2)
+                {
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        printf("Tree number \033[1;34m%d\033[0m", i);
+                        Node = Element_V10ATib(*Arbarray, i);
+                        *L2 = Element_V10Li(*TL2, i);
+                        Checkbbrl(&Node, &*L2, &templist);
+                        printf("\n\n");
+                    }
+                }
+            }
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 4:
+            printloading();
+            if (*opt4 == 0)
+            {
+                printf("\n\n\n\n    \033[1;31mPlease travers the tree using Traversal four first !\033[0m \n");
+            }
+            else
+            {
+                printf("\n\n\n\033[1;32mChecking traversal four\033[0m \n\n");
+                if (j == 1)
+                {
+                    CheckllrlAnimated(&*Arbre);
+                }
+                else if (j == 2)
+                {
+
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        printf("Tree number \033[1;34m%d\033[0m", i);
+                        Node = Element_V10ATib(*Arbarray, i);
+                        Checkllrl(&Node);
+                        printf("\n\n");
+                    }
+                }
+            }
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 5:
+            printloading();
+            if (*opt1 == 0 || *opt2 == 0 || *opt3 == 0 || *opt4 == 0)
+            {
+                printf("\n\n\n\n    \033[1;31mPlease travers the tree using all the traversals first !\033[0m \n");
+                printf("\n\n\n\n        Click Entrer to go back . . .");
+                getchar();
+                break;
+            }
+            if (*opt1 == 1 && *opt2 == 1 && *opt3 == 1 && *opt4 == 1)
+            {
+                printf("\n\n\n\033[1;32mChecking all the traversals\033[0m \n\n");
+                printf("\n\n\n\n    The different checks have been done \033[1;32mSuccessfully\033[0m \n");
+                if (j == 1)
+                {
+                    Checkbblr(&*Arbre, &*L1, &templist);
+                    Checklllr(&*Arbre);
+                    Checkbbrl(&*Arbre, &*L3, &templist);
+                    Checkllrl(&*Arbre);
+                }
+                else if (j == 2)
+                {
+
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        printf("Tree number \033[1;34m%d\033[0m\n", i);
+                        Node = Element_V10ATib(*Arbarray, i);
+                        *L2 = Element_V10Li(*TL1, i);
+                        Checkbblr(&Node, &*L2, &templist);
+                        Checklllr(&Node);
+                        *L2 = Element_V10Li(*TL2, i);
+                        Checkbbrl(&Node, &*L2, &templist);
+                        Checkllrl(&Node);
+                        printf("\n\n");
+                    }
+                }
+            }
+
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 6:
+            printloading();
+            system("cls");
+            break;
+        default:
+            break;
+        }
+    } while (i != 6);
+}
+
+void printMenu(int arrowpos)
+{
+    system("cls");
+    printf("\033[0m\n\t\t\t\t\t     \033[34m\033[1mTREE TRAVERSAL TECHNIQUES \033[0m\n\n\n");
+    int maxopt = 5;
+    char options[][150] = {"Create Trees", "Check BST", "Traversals", "Check Traversals", "Exit"};
+    for (int i = 0; i < maxopt; i++)
+    {
+        if (arrowpos == i + 1)
+        {
+
+            printf("\t --->     ");
+            highlightLine(options[i]);
+            printf("\n");
+        }
+        else
+        {
+            printf("\t       %s\n\n", options[i]);
+        }
+    }
+    printf("\x1b[0m\n                \033[32m\033[1mUSAGE NOTES:\033[0m\n");
+    printf("\x1b[0m\n         \033[32m- Use the arrow keys to navigate through the menu.\x1b[0m");
+    printf("\x1b[0m\n         \033[32m- Press Enter to select an option.\x1b[0m\n\n");
+}
+
+void Menu(Pointeur_ATib *Arbre, Typevect_V10ATib *Arbarray, Pointeur_Li *L1, Pointeur_Li *L2, Pointeur_Li *L3, Pointeur_Li *L4, Typevect_V10Li *Tl1, Typevect_V10Li *Tl2)
+
+{
+    int opt5 = 0;
+    int opt6 = 0;
+    int opt1 = 0;
+    int opt3 = 0;
+    int opt2 = 0;
+    int opt4 = 0;
+    int i = 0;
+    int borne1 = 0;
+    int borne2 = 10000;
+    printESI();
+    Welcome();
+    do
+    {
+        system("cls");
+        printMenu(1);
+        i = 1;
+        int maxopt = 5;
+        char ch = 0;
+    menu1:
+        while (ch != 13)
+        {
+            ch = getch();
+            switch (ch)
+            {
+            case 72:
+                if (i != 1)
+                {
+                    i--;
+                    printMenu(i);
+                }
+                else
+                {
+                    i = maxopt;
+                    printMenu(i);
+                }
+                break;
+            case 80:
+                if (i != maxopt)
+                {
+                    i++;
+                    printMenu(i);
+                }
+                else
+                {
+                    i = 1;
+                    printMenu(i);
+                }
+                break;
+            default:
+                goto menu1;
+                break;
+            }
+        }
+
+        switch (i)
+        {
+        case 1:
+            printloading();
+            SubMenu1(&*Arbre, &*Arbarray, &opt1, &opt2);
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 2:
+            printloading();
+            if (opt2 == 0 && opt1 == 0)
+            {
+                printf("\n\n\n\n    \033[1;31mPlease create the trees first !\033[0m \n");
+            }
+            else
+            {
+                if (opt1 == 1 && opt2 == 0)
+                {
+                    int borne1 = 0;
+                    int borne2 = 10000;
+                    if (Isbst(&*Arbre, &borne1, &borne2) == 1)
+                    {
+                        printf("\n\n\n\n    The tree is a \033[1;32mBinary Search Tree\033[0m \n");
+                    }
+                    else
+                    {
+                        printf("\n\n\n\n    The tree is \033[1;31mNOT a Binary Search Tree\033[0m \n");
+                    }
+                }
+                if (opt2 == 1 && opt1 == 0)
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (Isbst(&*Arbarray[0], &borne1, &borne2) == 1)
+                        {
+                            printf("\n\n    The tree number %d is a \033[1;32mBinary Search Tree\033[0m \n", i + 1);
+                        }
+                        else
+                        {
+                            printf("\n\n    The tree number %d is \033[1;31mNOT a Binary Search Tree\033[0m \n", i + 1);
+                        }
+                    }
+                }
+                if (opt1 == 1 && opt2 == 1)
+                {
+                    printf("\n\n\n\n    The Predefined tree is \033[1;32mBinary Search Trees\033[0m \n");
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (Isbst(&*Arbarray[0], &borne1, &borne2) == 1)
+                        {
+                            printf("\n\n    The tree number %d is a \033[1;32mBinary Search Tree\033[0m \n", i + 1);
+                        }
+                        else
+                        {
+                            printf("\n\n    The tree number %d is \033[1;31mNOT a Binary Search Tree\033[0m \n", i + 1);
+                        }
+                    }
+                }
+            }
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+            break;
+        case 3:
+            printloading();
+
+            SubMenu2(&*Arbre, &*Arbarray, &*L1, &*L2, &*L3, &*L4, &opt3, &opt4, &opt5, &opt6, &opt1, &opt2, &*Tl1, &*Tl2);
+            ;
+            printf("\n\n\n\n        Click Entrer to go back . . .");
+            getchar();
+
+            break;
+        case 4:
+            printloading();
+            SubMenu3(&*Arbre, &*Arbarray, &*L1, &*L3, &*L2, &opt3, &opt4, &opt5, &opt6, &opt1, &opt2, &*Tl1, &*Tl2);
+            break;
+        case 5:
+            printloading();
+            system("cls");
+            printf("\033[0m\n\n\n\n\t\t\t\t\t\t       \033[34m\033[1mEND OF THE PROGRAM.\033[0m\n\n");
+            printf("\t\t\t\t\t\t  \033[1mThanks for using our program!\033[0m\n\n\n\n");
+            break;
+        default:
+            break;
+        }
+    } while (i != 5);
+}
+//---------------------------------------------
+
+int main(int argc, char *argv[])
+{
+    srand(time(NULL));
+    S = malloc(sizeof(Type_Tib));
+    Arbarray = malloc(10 * sizeof(Pointeur_ATib));
+    int _Izw2;
+    for (_Izw2 = 0; _Izw2 < 10; ++_Izw2)
+        Arbarray[_Izw2] = malloc(sizeof(Pointeur_ATib));
+    TL1 = malloc(10 * sizeof(Pointeur_Li));
+    int _Izw3;
+    for (_Izw3 = 0; _Izw3 < 10; ++_Izw3)
+        TL1[_Izw3] = malloc(sizeof(Pointeur_Li));
+    TL2 = malloc(10 * sizeof(Pointeur_Li));
+    int _Izw4;
+    for (_Izw4 = 0; _Izw4 < 10; ++_Izw4)
+        TL2[_Izw4] = malloc(sizeof(Pointeur_Li));
+
+    Arbre = NULL;
+    L1 = NULL;
+    L2 = NULL;
+    L3 = NULL;
+    L4 = NULL;
+    Nn = NULL;
+    N = 18;
+    S_S.Champ1 = 45;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 20;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 10;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 35;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 65;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 55;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 85;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 50;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 58;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 75;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 95;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 56;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 60;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 90;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 98;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 57;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 62;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+    S_S.Champ1 = 88;
+    S_S.Champ2 = False;
+    Init_struct_Tib(S, S_S);
+    Insertbst(&S, &Arbre, &Done);
+
+    // TreePrinter(&Arbre, 88);
+    Menu(&Arbre, &Arbarray, &L1, &L2, &L3, &L4, &TL1, &TL2);
+    system("PAUSE");
+    return 0;
+}
